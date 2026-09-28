@@ -70,3 +70,4 @@ Team Member Signatures:
 
 Arthur Xu
 Kaden Calvert
+Finn Huang
