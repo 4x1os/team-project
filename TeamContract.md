@@ -69,4 +69,7 @@ By signing below, we acknowledge that we have read, discussed, and agreed to the
 Team Member Signatures:
 
 Arthur Xu
+<<<<<<< HEAD
 Tam Ho :D
+Kaden Calvert
+Finn Huang
