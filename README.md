@@ -1,21 +1,20 @@
-# Project Name
+# UofT's Prediction Market
 ## Team Information
 ### Team Members
-- Name
-- Name
-- Name
-- Name
-- Name
-- Name
+- Arthur Xu
+- Tam Ho 
+- Kaden Calvert
+- Arianna Sefidi
+- Finn Huang 
 ---
 ## Project Description
 ### Domain
 [Project description]
 ---
 ## User Stories
-### User Story 1
-### User Story 2
-### User Story 3
+### As a [kind of user], I want to [accomplish a goal] so that [I receive some benefit]. User Story 1
+### As a [kind of user], I want to [accomplish a goal] so that [I receive some benefit]. User Story 2
+### As a [kind of user], I want to [accomplish a goal] so that [I receive some benefit]. User Story 3
 (Add additional user stories as needed.)
 ---
 ## Use Cases
