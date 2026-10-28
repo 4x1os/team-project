@@ -1,18 +1,15 @@
 
-public class User{
+public class User {
+    private String username;
+    private String password;
+    private String email;
+    private boolean admin = false;
+    private int points = 0;
+    // Need to add Stats of success, bets, profit, and rating
 
-    public boolean signup(String username, String password) {
-        return false;
-    }
-
-    public boolean login(String username, String password) {
-        return false; // Placeholder
-    }
-
-    public static void main(String[] args) {
-        User account1 = new User();
-        account1.login("tamho123","password123");
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
     }
 }
-
-
