@@ -43,7 +43,7 @@ public class UserCreation {
         return "Success!";
     }
 
-    private boolean verifiedPass() {
+    public boolean verifiedPass() {
         if (userVerification().equals("Success!") &&
                 passwordVerification().equals("Success!") &&
                 emailVerification().equals("Success!")) {
