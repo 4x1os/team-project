@@ -1,21 +1,20 @@
-# Project Name
+# UofT Prediction Market
 ## Team Information
 ### Team Members
-- Name
-- Name
-- Name
-- Name
-- Name
-- Name
+- Aria
+- Arthur
+- Finn
+- Tam
+- Kaden
 ---
 ## Project Description
 ### Domain
 [Project description]
 ---
 ## User Stories
-### User Story 1
-### User Story 2
-### User Story 3
+### As an User, I want unique account credentials.
+### As an User, I want to create and participate in predictions.
+### As an User, I want to be scored and ranked in a leaderboard.
 (Add additional user stories as needed.)
 ---
 ## Use Cases
