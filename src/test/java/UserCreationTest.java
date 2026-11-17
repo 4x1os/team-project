@@ -45,6 +45,7 @@ public class UserCreationTest {
         );
 
         assertEquals(false, account.verifiedPass());
+        assertEquals(true, account.verifiedPass());
     }
 
     @Test

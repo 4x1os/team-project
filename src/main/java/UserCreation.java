@@ -20,6 +20,12 @@ public class UserCreation {
     // Username MUST be unique, greater than or equal to 4 characters
     private String userVerification() {
         // if username is type Null or length is less than or equal to 3
+            id += 1;
+        }
+    }
+
+    // Username must be unique, greater than or equal to 4 characters
+    private String userVerification() {
         if (username == null || username.length() <= 3) {
             return "Username must be at least 4 characters";
         }
