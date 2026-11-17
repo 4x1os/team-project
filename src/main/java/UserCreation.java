@@ -13,6 +13,13 @@ public class UserCreation {
         if (verifiedPass()) {
             // Still need to add to database below
             User newUser = new User(this.username, this.password, this.email);
+            id += 1; // Should I even do this?
+        }
+    }
+
+    // Username MUST be unique, greater than or equal to 4 characters
+    private String userVerification() {
+        // if username is type Null or length is less than or equal to 3
             id += 1;
         }
     }
