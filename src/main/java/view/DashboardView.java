@@ -17,7 +17,7 @@ public class DashboardView extends JPanel implements ActionListener, DashboardVi
         this.dashboardViewModel = dashboardViewModel;
 
         final JLabel title = new JLabel("Dashboard");
-
+        board.add(title);
 
 
         this.add(board);
