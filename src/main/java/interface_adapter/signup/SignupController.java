@@ -28,6 +28,12 @@ public class SignupController {
      */
     public void execute(String username, String email, String password,
                         String repeatPassword) {
+        // TESTING
+        System.out.println("SignupController test");
+        System.out.println(username);
+        System.out.println(email);
+        System.out.println(password);
+
         // Package the user's signup information into an InputData's object
         SignupInputData inputData = new SignupInputData(username, email, password, repeatPassword);
         // Send to interactor

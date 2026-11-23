@@ -1,4 +1,9 @@
 package view;
 
-public class LoginView {
+import javax.swing.*;
+
+public class LoginView extends JPanel {
+    public LoginView() {
+        add(new JLabel("Login Page"));
+    }
 }

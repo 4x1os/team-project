@@ -3,6 +3,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import interface_adapter.signup.SignupController;
 
 public class SignupView extends JPanel {
     private final JTextField usernameField;
@@ -11,10 +12,12 @@ public class SignupView extends JPanel {
     private final JPasswordField passwordConfirm;
     private final JButton submit;
     private final JButton login;
+    private final SignupController signupController;
 
-    public SignupView() {
+    public SignupView(SignupController signupController) {
+        this.signupController = signupController;
+
         setLayout(new BorderLayout());
-
         JPanel form = new JPanel(new GridLayout(5, 2, 10, 10));
 
         usernameField = new JTextField(20);
@@ -24,7 +27,20 @@ public class SignupView extends JPanel {
         submit = new JButton("Sign up");
         login = new JButton("Have an account? Login here");
 
-        // Taken image from resources
+        // Add listener to Submit button
+        submit.addActionListener(event -> {
+            signupController.execute(
+                    usernameField.getText(),
+                    emailField.getText(),
+                    new String (passwordField.getPassword()),
+                    new String (passwordConfirm.getPassword())
+            );
+        });
+
+        // Add listener to "Have an account? Login here"
+
+
+        // UofT Market logo resized and inserted below sign up form
         ImageIcon logo = new ImageIcon(getClass().getResource("/UoftMarket.png"));
         // Resized image
         Image resizedLogo = logo.getImage().getScaledInstance(
