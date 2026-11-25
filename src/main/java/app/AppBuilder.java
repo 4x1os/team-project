@@ -7,13 +7,11 @@ import entity.PredictionFactory;
 import interface_adapter.create_prediction.CreatePredictionController;
 import interface_adapter.create_prediction.CreatePredictionPresenter;
 import interface_adapter.create_prediction.CreatePredictionViewModel;
-import interface_adapter.dashboard.DashboardViewModel;
 import use_case.create_prediction.CreatePredictionDataAccessInterface;
 import use_case.create_prediction.CreatePredictionInputBoundary;
 import use_case.create_prediction.CreatePredictionInteractor;
 import use_case.create_prediction.CreatePredictionOutputBoundary;
 import view.CreatePredictionView;
-import view.DashboardView;
 import view.SignupView;
 import interface_adapter.signup.SignupController;
 import use_case.signup.SignupInputBoundary;
@@ -47,8 +45,6 @@ public class AppBuilder {
 
     private CreatePredictionView createPredictionView;
     private CreatePredictionViewModel createPredictionViewModel;
-    private DashboardView dashboardView;
-    private DashboardViewModel dashboardViewModel;
 
 
 
