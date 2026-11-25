@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.dashboard.DashboardController;
 import interface_adapter.dashboard.DashboardState;
 import interface_adapter.dashboard.DashboardViewModel;
 import interface_adapter.dashboard.DashboardViewModelListener;
@@ -11,14 +13,26 @@ import java.awt.event.ActionListener;
 public class DashboardView extends JPanel implements ActionListener, DashboardViewModelListener {
 
     private final DashboardViewModel dashboardViewModel;
+    private final ViewManagerModel viewManagerModel;
     private final JPanel board = new JPanel();
+    private DashboardController controller = null;
+    private final JButton move;
 
-    public DashboardView(DashboardViewModel dashboardViewModel){
+    public DashboardView(DashboardViewModel dashboardViewModel, ViewManagerModel viewManagerModel){
         this.dashboardViewModel = dashboardViewModel;
+        this.viewManagerModel = viewManagerModel;
 
         final JLabel title = new JLabel("Dashboard");
-        board.add(title);
 
+        move = new JButton("switch screen");
+
+        move.addActionListener(e ->{
+            this.viewManagerModel.setView("prediction view");
+            this.viewManagerModel.notifyViewChanged();
+        });
+
+        board.add(title);
+        board.add(move);
 
         this.add(board);
     }
@@ -39,4 +53,6 @@ public class DashboardView extends JPanel implements ActionListener, DashboardVi
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click: " + e);
     }
+
+    public void setDashboardController(DashboardController controller) { this.controller = controller; }
 }

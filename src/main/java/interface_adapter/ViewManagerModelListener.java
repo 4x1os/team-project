@@ -5,5 +5,5 @@ public interface ViewManagerModelListener {
     /**
      *  Called when the active view changes
      */
-    void stateChanged();
+    void viewChanged();
 }

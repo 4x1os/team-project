@@ -3,27 +3,19 @@ package interface_adapter;
 
 
 public class ViewManagerModel {
-    // Sets the default view to the signup page when application starts
-    private ViewState state = ViewState.SIGNUP;
-    private ViewManagerModelListener listener;
-    public ViewManagerModel(ViewManagerModelListener listener) {
-        this.listener = listener;
+
+    private ViewManagerModelListener listener = null;
+    private String currentViewName = "";
 
 
-    }
-    /**
-     * Get current state
-     * @return current view state
-     */
-    public ViewState getState () {
-        return state;
-    }
+    public String getViewName() { return this.currentViewName; }
 
-    /**
-     * Updates current state
-     * @param state new view state
-     */
-    public void setState (ViewState state) {
-        this.state = state;
-    }
+    public void setView(String newViewName) { this.currentViewName = newViewName; }
+
+    public void notifyViewChanged() { listener.viewChanged(); }
+
+    public void setListener(ViewManagerModelListener listener) { this.listener = listener; }
+
+
+
 }

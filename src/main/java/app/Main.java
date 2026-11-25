@@ -9,7 +9,9 @@ public class Main {
         AppBuilder appBuilder = new AppBuilder();
         JFrame application = appBuilder
                 .addCreatePredictionView()
+                .addDashboardView()
                 .addCreatePredictionUseCase()
+                .addFetchPredictionsUseCase()
                 .startup();
         application.setLocationRelativeTo(null);
         application.setVisible(true);
