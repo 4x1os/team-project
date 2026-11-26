@@ -1,17 +1,15 @@
 /**
  * Handles friend request logic. Uses FriendRequestInputData.
  */
+// TODO: can add friend notes only viewable to user?
 package entity;
-import use_case.friend_request.FriendRequestInputBoundary;
-import use_case.friend_request.FriendRequestInputData;
-
 import java.util.ArrayList;
 
-public class FriendManager implements FriendRequestInputBoundary {
+public class FriendManager {
     private final User user;
     private ArrayList<User> friends;
-    private ArrayList<FriendRequestInputData> pendingRequests;
-    private ArrayList<FriendRequestInputData> incomingRequests;
+    private ArrayList<FriendRequest> pendingRequests;
+    private ArrayList<FriendRequest> incomingRequests;
 
     /**
     Initialise FriendManager for given user.
@@ -23,11 +21,9 @@ public class FriendManager implements FriendRequestInputBoundary {
         this.incomingRequests = new ArrayList<>();
     }
 
-    public ArrayList<User> getFriendsList() { return this.friends; }
+    public ArrayList<FriendRequest> getPendingRequestList() { return this.pendingRequests; }
 
-    public ArrayList<FriendRequestInputData> getPendingRequestList() { return this.pendingRequests; }
-
-    public ArrayList<FriendRequestInputData> getIncomingRequestList() { return this.incomingRequests; }
+    public ArrayList<FriendRequest> getIncomingRequestList() { return this.incomingRequests; }
 
     /**
      * Add the user as a friend.
@@ -78,11 +74,25 @@ public class FriendManager implements FriendRequestInputBoundary {
         } else if (this.checkPendingRequestExists(name)) {
             throw new IllegalArgumentException("A friend request sent to this user already exists.");
         } else {
-            FriendRequestInputData request = new FriendRequestInputData(this.user, name);
+            FriendRequest request = new FriendRequest(this.user, name);
             this.addPendingRequest(request);
             name.getFriendManager().addIncomingRequest(request);
 
             // TODO: something that updates viewers for both
+        }
+    }
+
+    /**
+     * Cancels a pending friend request to name. Also removes
+     * the request from the other user's incoming requests.
+     * Do not cancel if pending request to name does not exist.
+     */
+    public void cancelFriendRequest(User name) {
+        if (!this.checkPendingRequestExists(name)) {
+            throw new IllegalArgumentException("A friend request to this user does not exist.");
+        } else {
+            this.deletePendingRequest(name);
+            name.getFriendManager().deleteIncomingRequest(this.user);
         }
     }
 
@@ -136,7 +146,7 @@ public class FriendManager implements FriendRequestInputBoundary {
      * Check if there is an existing pending friend request to name.
      */
     public boolean checkPendingRequestExists(User name) {
-        for (FriendRequestInputData r : this.pendingRequests) {
+        for (FriendRequest r : this.pendingRequests) {
             if (r.getReceiver() == name) {
                 return true;
             }
@@ -147,14 +157,14 @@ public class FriendManager implements FriendRequestInputBoundary {
     /**
      * Return an existing pending friend request to name.
      */
-    public FriendRequestInputData getPendingRequest(User name) {
+    public FriendRequest getPendingRequest(User name) {
         // Check request to user exists
         if (!this.checkPendingRequestExists(name)) {
             throw new IllegalArgumentException(
                     "A friend request to this user does not exist."
             );}
 
-        for (FriendRequestInputData r : this.pendingRequests) {
+        for (FriendRequest r : this.pendingRequests) {
             if (r.getReceiver().getUsername().equals(name.getUsername())) {
                 return r;
             }}
@@ -168,7 +178,7 @@ public class FriendManager implements FriendRequestInputBoundary {
      * Check if there is an existing incoming friend request from name.
      */
     public boolean checkIncomingRequestExists(User name) {
-        for (FriendRequestInputData r : this.incomingRequests) {
+        for (FriendRequest r : this.incomingRequests) {
             if (r.getSender() == name) {
                 return true;
             }
@@ -179,14 +189,14 @@ public class FriendManager implements FriendRequestInputBoundary {
     /**
      * Return an existing incoming friend request from name.
      */
-    public FriendRequestInputData getIncomingRequest(User name) {
+    public FriendRequest getIncomingRequest(User name) {
         // Check request from user exists
         if (!this.checkIncomingRequestExists(name)) {
             throw new IllegalArgumentException(
                     "A friend request from this user does not exist."
             );}
 
-        for (FriendRequestInputData r : this.incomingRequests) {
+        for (FriendRequest r : this.incomingRequests) {
             if (r.getSender().getUsername().equals(name.getUsername())) {
                 return r;
             }}
@@ -197,7 +207,7 @@ public class FriendManager implements FriendRequestInputBoundary {
 
         }
 
-    public void addPendingRequest(FriendRequestInputData pending) { this.pendingRequests.add(pending); }
+    public void addPendingRequest(FriendRequest pending) { this.pendingRequests.add(pending); }
 
     public void deletePendingRequest(User name) {
         for (int i = 0; i < this.pendingRequests.size(); i++) {
@@ -208,7 +218,7 @@ public class FriendManager implements FriendRequestInputBoundary {
         }
     }
 
-    public void addIncomingRequest(FriendRequestInputData incoming) { this.incomingRequests.add(incoming); };
+    public void addIncomingRequest(FriendRequest incoming) { this.incomingRequests.add(incoming); };
 
     public void deleteIncomingRequest(User name) {
         for (int i = 0; i < this.incomingRequests.size(); i++) {

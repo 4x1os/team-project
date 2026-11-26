@@ -1,23 +1,20 @@
 package use_case.friend_request;
-import entity.FriendManager;
-import entity.User;
 
-public class FriendRequest {
-    private final User sender;
-    private final User receiver;
-    private boolean accepted;
+public class FriendRequestInputData {
+    private final String senderUsername;
+    private final String receiverUsername;
+//    private final String senderNote;
 
-    public FriendRequest(User requester, User requestee) {
-        this.sender = requester;
-        this.receiver = requestee;
-        this.accepted = false;
+    public FriendRequestInputData(String senderUsername, String receiverUsername, String senderNote) {
+        this.senderUsername = senderUsername;
+        this.receiverUsername = receiverUsername;
+//        this.senderNote = senderNote;
     }
 
-    public User getSender() { return this.sender; }
+    public String getSenderUsername() { return this.senderUsername; }
 
-    public User getReceiver() { return this.receiver; }
+    public String getReceiverUsername() { return this.receiverUsername; }
 
-    public void updateFriendRequest(boolean status) {
-        this.accepted = status;
-    }
+//    public String getSenderNote() { return this.senderNote; }
+
 }
