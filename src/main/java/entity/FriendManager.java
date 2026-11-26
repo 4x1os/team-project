@@ -23,11 +23,11 @@ public class FriendManager implements FriendRequestInputBoundary {
         this.incomingRequests = new ArrayList<>();
     }
 
-    public ArrayList<User> getFriendList() { return this.friends; }
+    public ArrayList<User> getFriendsList() { return this.friends; }
 
-    public ArrayList<FriendRequestInputData> getPendingRequests() { return this.pendingRequests; }
+    public ArrayList<FriendRequestInputData> getPendingRequestList() { return this.pendingRequests; }
 
-    public ArrayList<FriendRequestInputData> getIncomingRequests() { return this.incomingRequests; }
+    public ArrayList<FriendRequestInputData> getIncomingRequestList() { return this.incomingRequests; }
 
     /**
      * Add the user as a friend.
@@ -99,6 +99,7 @@ public class FriendManager implements FriendRequestInputBoundary {
         } else {
             this.addFriend(name);
             name.getFriendManager().addFriend(this.user);
+            this.getIncomingRequest(name).updateFriendRequest(true);
             this.deleteIncomingRequest(name);
             name.getFriendManager().deletePendingRequest(this.user);
         }
@@ -144,6 +145,26 @@ public class FriendManager implements FriendRequestInputBoundary {
     }
 
     /**
+     * Return an existing pending friend request to name.
+     */
+    public FriendRequestInputData getPendingRequest(User name) {
+        // Check request to user exists
+        if (!this.checkPendingRequestExists(name)) {
+            throw new IllegalArgumentException(
+                    "A friend request to this user does not exist."
+            );}
+
+        for (FriendRequestInputData r : this.pendingRequests) {
+            if (r.getReceiver().getUsername().equals(name.getUsername())) {
+                return r;
+            }}
+        // If anything goes wrong, function still has somewhere to exit
+        throw new IllegalArgumentException(
+                "A friend request to this user does not exist."
+        );
+    }
+
+    /**
      * Check if there is an existing incoming friend request from name.
      */
     public boolean checkIncomingRequestExists(User name) {
@@ -155,11 +176,32 @@ public class FriendManager implements FriendRequestInputBoundary {
         return false;
     }
 
-    public void addPendingRequest(FriendRequestInputData pending) { this.pendingRequests.add(pending); };
+    /**
+     * Return an existing incoming friend request from name.
+     */
+    public FriendRequestInputData getIncomingRequest(User name) {
+        // Check request from user exists
+        if (!this.checkIncomingRequestExists(name)) {
+            throw new IllegalArgumentException(
+                    "A friend request from this user does not exist."
+            );}
+
+        for (FriendRequestInputData r : this.incomingRequests) {
+            if (r.getSender().getUsername().equals(name.getUsername())) {
+                return r;
+            }}
+        // If anything goes wrong, function still has somewhere to exit
+        throw new IllegalArgumentException(
+                    "A friend request from this user does not exist."
+            );
+
+        }
+
+    public void addPendingRequest(FriendRequestInputData pending) { this.pendingRequests.add(pending); }
 
     public void deletePendingRequest(User name) {
         for (int i = 0; i < this.pendingRequests.size(); i++) {
-            if (this.pendingRequests.get(i).getSender() == name) {
+            if (this.pendingRequests.get(i).getReceiver().getUsername().equals(name.getUsername())) {
                 this.pendingRequests.remove(i);
                 return;
             }
@@ -170,7 +212,7 @@ public class FriendManager implements FriendRequestInputBoundary {
 
     public void deleteIncomingRequest(User name) {
         for (int i = 0; i < this.incomingRequests.size(); i++) {
-            if (this.incomingRequests.get(i).getSender() == name) {
+            if (this.incomingRequests.get(i).getSender().getUsername().equals(name.getUsername())) {
                 this.incomingRequests.remove(i);
                 return;
             }

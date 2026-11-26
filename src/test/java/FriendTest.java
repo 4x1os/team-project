@@ -10,6 +10,17 @@ public class FriendTest {
         u1.getFriendManager().sendFriendRequest(u2);
         assertTrue(u1.getFriendManager().checkPendingRequestExists(u2));
         assertTrue(u2.getFriendManager().checkIncomingRequestExists(u1));
+        assertFalse(u1.getFriendManager().getPendingRequest(u2).getStatus());
+    }
+    @Test
+    public void testSendFriendRequestTwice() {
+        User u1 = new User("u1", "u1pw", "u1email");
+        User u2 = new User("u2", "u2pw", "u2email");
+        u1.getFriendManager().sendFriendRequest(u2);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    u1.getFriendManager().sendFriendRequest(u2);
+                });
     }
     @Test
     public void testSendFriendRequesttoFriend() {
@@ -45,11 +56,21 @@ public class FriendTest {
     }
     @Test
     public void testAcceptNonExistentFriendRequest() {
-
+        User u1 = new User("u1", "u1pw", "u1email");
+        User u2 = new User("u2", "u2pw", "u2email");
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    u1.getFriendManager().acceptFriendRequest(u2);
+                });
     }
     @Test
     public void testRejectNonExistentFriendRequest() {
-
+        User u1 = new User("u1", "u1pw", "u1email");
+        User u2 = new User("u2", "u2pw", "u2email");
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class, () -> {
+                    u1.getFriendManager().rejectFriendRequest(u2);
+                });
     }
 }
 
@@ -63,10 +84,4 @@ public class FriendTest {
 // view friends' ranks
 //
 // REQUESTING
-// accept friend request
-// reject friend request
-// send friend request
 // view friend requests
-// can't send request twice
-
-// - add to user class -> list of other users as part of friends thing
