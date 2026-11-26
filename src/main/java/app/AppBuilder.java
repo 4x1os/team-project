@@ -6,6 +6,7 @@ import view.SignupView;
 import interface_adapter.signup.SignupController;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
+import data.PredictionDataAccessObject;
 
 public class AppBuilder {
     public JFrame startup() {
@@ -13,6 +14,13 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Creates sign up interactor, controller to the interactor, view to the controller
+        final PredictionDataAccessObject predictionDataAccessObject;
+        try{
+            predictionDataAccessObject = new PredictionDataAccessObject();
+        }
+        catch(Exception e){
+            System.err.println("Could not load database: "+e);
+        }
         SignupInteractor signupInteractor = new SignupInteractor();
         SignupController signupController = new SignupController(signupInteractor);
         SignupView signupView = new SignupView(signupController);
