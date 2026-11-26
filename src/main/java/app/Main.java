@@ -5,10 +5,13 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            AppBuilder app = new AppBuilder();
-            JFrame application = app.startup();
-            application.setVisible(true);
-        });
+
+        AppBuilder appBuilder = new AppBuilder();
+        JFrame application = appBuilder
+                .addCreatePredictionView()
+                .addCreatePredictionUseCase()
+                .startup();
+        application.setLocationRelativeTo(null);
+        application.setVisible(true);
     }
 }

@@ -8,8 +8,6 @@ public class SignupInteractor implements SignupInputBoundary{
         String email = inputData.getEmail();
         String password = inputData.getPassword();
         String repeatPassword = inputData.getRepeatPassword();
-
-
     }
 
 
