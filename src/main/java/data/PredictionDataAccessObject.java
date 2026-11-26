@@ -1,19 +1,19 @@
 package data;
-import entity.User;
-import java.io.FileNotFoundException;
+
 import com.google.auth.oauth2.GoogleCredentials;
-import java.util.concurrent.ExecutionException;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
-import java.io.FileInputStream;
+
 import use_case.create_prediction.CreatePredictionDataAccessInterface;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import java.util.List;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import java.io.*;
+
+import entity.Prediction;
+
 /**
  * DAO for user data implemented using a File to persist the data.
  * this firestore genuinely testing my patience bro
@@ -33,9 +33,21 @@ public class PredictionDataAccessObject implements CreatePredictionDataAccessInt
         database = FirestoreClient.getFirestore();
     }
 
-    public boolean existsByTitle() throws InterruptedException, ExecutionException {
-        ApiFuture<QuerySnapshot> future = database.collection("predictions").get();
-        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+    public boolean existsByTitle(String title) {
+        if (title == null || title.isBlank()){ throw new IllegalArgumentException("Title cannot be empty");}
+        DocumentReference docRef = database.collection("predictions").document(title);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        try{
+            DocumentSnapshot document = future.get();
+            return document.exists();
+        } catch (Exception e){
+            throw new RuntimeException("Database request failed: ", e);
+        }
+    }
+    
+    public void save(Prediction prediction){
+        database.collection("predictions")
+            .add(prediction);
     }
     
 }
